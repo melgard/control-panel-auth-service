@@ -3,14 +3,16 @@ FROM node:carbon
 MAINTAINER info.pcmas@gmail.com
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package.json ./
+RUN npm install nodemon -g
+
+COPY package.json /app
 
 RUN npm install
 
-COPY . .
-
-EXPOSE 3000
+COPY . /app
 
 CMD [ "npm", "start" ]
+
+EXPOSE 3000

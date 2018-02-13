@@ -21,13 +21,16 @@ app.use(bodyParser.json());
 // Rutas
 app.use('/usuarios', usuariosRoutes);
 app.use('/login', loginRoutes);
-app.use('/', appRoutes);
+
+
+const MONGO_ADDRESS = process.env.MONGO_ADDRESS || '127.0.0.1';
+const MONGO_PORT = process.env.MONGO_PORT || '27017';
 
 
 // Conexión a la base de datos
-mongoose.connection.openUri('mongodb://localhost:27017/authdb', (err, res) => {
+mongoose.connection.openUri(`mongodb://${MONGO_ADDRESS}:${MONGO_PORT}/authdb`, (err, res) => {
     if (err) throw err;
-    console.log('Servidor MongoDB \x1b[32m%s\x1b[0m','conectado');
+    console.log('Servidor MongoDB \x1b[32m%s\x1b[0m', 'conectado', 'Address: ', MONGO_ADDRESS, 'Port: ', MONGO_PORT);
 });
 
 // Listening
