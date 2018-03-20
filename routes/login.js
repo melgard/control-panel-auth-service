@@ -2,14 +2,16 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const SEED = require('../config/config').SEED;
+const SEED = require('../config/config').privateKey;
+
 
 // Init vars
 const app = express();
 
 // Models
 const Usuario = require('../models/usuario');
-app.post('/', (req, res, next) => {
+app.post('/', (req, res) => {
+
     const body = req.body;
     if (!body.email || !body.password) {
         return res.status(400).json({
@@ -55,7 +57,7 @@ app.post('/', (req, res, next) => {
             });
         }
 
-        const token = jwt.sign({usuario: data}, SEED, {expiresIn: 14400}); // 4horas
+        const token = jwt.sign({usuario: data}, SEED, {algorithm: 'RS256', expiresIn: 14400}); // 4horas
 
         res.status(200).json({
             ok: true,

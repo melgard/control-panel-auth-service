@@ -38,7 +38,7 @@ app.get('/', mdAuth.tokenVerify, (req, res, next) => {
 // =============================================
 // Crear un usuario
 // =============================================
-app.post('/', mdAuth.tokenVerify, (req, res) => {
+app.post('/', [], (req, res) => {
     const body = req.body;
     const usuario = new Usuario({
         name: body.name,
